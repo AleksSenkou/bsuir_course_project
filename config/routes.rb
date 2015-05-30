@@ -4,5 +4,7 @@ Rails.application.routes.draw do
 
   get 'admin/users', to: 'admins#all_users', as: 'all_users'
 
-  root 'static_pages#home'
+  resources :schedules, only: [:new, :create, :show]
+
+  root 'schedules#new'
 end
