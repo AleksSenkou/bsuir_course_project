@@ -1,0 +1,8 @@
+.navbar.navbar-inverse.navbar-fixed-top
+  = link_to 'Carefree Student', root_path, id: 'logo'
+  - if user_signed_in?
+    = render 'layouts/menu'
+  - else
+    ul#top-nav-ul-not-signed
+      li = link_to 'Login', new_user_session_path
+      li = link_to 'Sign up', new_user_registration_path

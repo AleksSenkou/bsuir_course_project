@@ -1,0 +1,24 @@
+= render layout: 'shared/form_panel', locals: { title: 'Settings' , links: false} do
+  = simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
+
+    .avatar
+      = gravatar_for(current_user, 200)
+    p = link_to 'Change', "http://gravatar.com/emails", id:'btn-edit-user-img'
+    br
+
+    = f.input :name, autofocus: true, required: false
+    = f.input :email
+    i leave blank if you don't want to change it
+    = f.input :password, autocomplete: "off"
+    = f.input :password_confirmation, autocomplete: "off"
+    i we need your current password to confirm your changes
+    = f.input :current_password, autocomplete: "off"
+    = f.button :submit, "Edit"
+
+  - if !admin?
+    .edit-profile-bottom-part
+      i There is no need :)
+      br
+      = link_to "Delete my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, id: 'btn-delete-account'
+  br
+  = link_to "Cancel", root_path, id: 'btn-cancel-edit'

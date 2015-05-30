@@ -1,0 +1,85 @@
+/*
+ *= require_tree .
+ *= require_self
+ */
+
+@import 'bootstrap'
+
+$grayDark: #222222
+$grayLight: #4F4F4F
+
+@mixin delay($speed)
+  transition-duration: $speed
+  -moz-transition-duration: $speed
+  -webkit-transition-duration: $speed
+  -o-transition-duration: $speed
+
+@mixin advert-image($size)
+  font-weight: bold
+  margin: 0 0 1% 0
+  img
+    background-color: $grayLight
+    @extend .img-rounded
+    height: $size
+    width: $size
+    opacity: 0.9
+    @include delay(.6s)
+    &:hover
+      border: 3px solid $grayDark
+      @include delay(.4s)
+      opacity: 1
+
+@mixin advert-image-without-border($size)
+  img
+    background-color: $grayLight
+    @extend .img-rounded
+    height: $size
+    width: $size
+
+#yield-block
+  @extend .container
+  margin-top: 6%
+  margin-bottom: 6%
+
+.center
+  text-align: center
+
+.avatar
+  img
+    @extend .img-circle
+
+.show-user-advert-image
+  @include advert-image(180px)
+
+.show-advert-image
+  @include advert-image(250px)
+
+.home-advert-image
+  @include advert-image(250px)
+
+.admin-advert-image
+  @include advert-image-without-border(100px)
+
+.edit-advert-image
+  @include advert-image-without-border(50px)
+
+.rating
+  margin: 1.5% 0 10% 0
+  img
+    height: 21px
+    width: 21px
+    &:visited
+      border: 1px solid $grayLight
+
+.likes
+  margin: 0 1.5% 0 1.5%
+
+.likes-count
+  font-weight: bold
+  font-size: 0.8em
+  margin: 0 0 0 0.5%
+
+.advert-name
+  margin: 1% 0 0 0
+  font-size: 1.2em
+  color: $grayDark

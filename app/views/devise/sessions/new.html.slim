@@ -1,0 +1,6 @@
+= render layout: 'shared/form_panel', locals: { title: 'Login', links: true } do
+  = simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: { role: "form" }) do |f|
+    = f.input :email, autofocus: true
+    = f.input :password, autocomplete: "off"
+    = f.input :remember_me, as: :boolean, inline_label: 'Yes, remember me'
+    = f.button :submit, 'Login'

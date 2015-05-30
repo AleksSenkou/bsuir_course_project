@@ -1,0 +1,10 @@
+.form-panel
+  .panel.panel-default
+    .panel-heading
+      h4 = title
+    .panel-body
+      .center
+        = yield
+
+  - if links
+    = render "devise/shared/links"

@@ -1,0 +1,20 @@
+default: &default
+  adapter: postgresql
+  encoding: utf8
+  pool: 5
+  timeout: 5000
+  host: localhost
+  username: data
+  password: rocket
+
+development:
+  <<: *default
+  database: board_development
+
+test:
+  <<: *default
+  database: board_test
+
+production:
+  <<: *default
+  database: board_production

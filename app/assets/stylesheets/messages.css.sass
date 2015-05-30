@@ -1,0 +1,20 @@
+@import 'bootstrap'
+
+@mixin alerts
+  text-align: center
+
+.alert-error
+  @extend .alert-danger
+  @include alerts
+
+.alert-alert
+  @extend .alert-warning
+  @include alerts
+
+.alert-success
+  @extend .alert-success
+  @include alerts
+
+.alert-notice
+  @extend .alert-info
+  @include alerts

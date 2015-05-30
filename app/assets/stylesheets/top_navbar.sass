@@ -1,0 +1,73 @@
+@import 'bootstrap'
+
+$white: #fff
+$grayDark: #222
+$grayLight: #4F4F4F
+
+@mixin nav_font
+  font: Geneva 'Times New Roman' 110% Times serif
+
+@mixin top-nav-ul
+  @include nav_font
+  width: 25%
+  float: right
+  margin-top: 12
+  li
+    list-style-type: none
+    display: inline
+
+@mixin a-decoration
+  a
+    color: rgb(210, 210, 210)
+    text-decoration: none
+    &:hover
+      color: $white
+
+#top-nav-ul-signed
+  @include top-nav-ul
+
+#top-nav-ul-not-signed
+  @include top-nav-ul
+  @include a-decoration
+  font-size: 1.5em
+  li
+    margin-right: 8%
+    display: inline
+
+#logo
+  @include nav_font
+  float: left
+  color: #D3D3D3
+  font-size: 1.7em
+  font-weight: bold
+  text-transform: uppercase
+  text-decoration: none
+  margin: 10 0 0 1.5%
+  &:hover
+    color: $white
+
+#top-new-advert
+  @include a-decoration
+  margin: 0% 20% 0% 0
+  a
+    @extend .glyphicon
+
+#tag-tooltip + .tooltip > .tooltip-inner
+  background-color: $grayDark
+  color: $white
+  font-size: 1.2em
+
+#toggle-menu
+  margin: 0 0 0 1.5%
+  button
+    font-size: 1.1em
+    width: 80
+    height: 30
+    background-color: $grayDark
+    border-radius: 8%
+    color: $white
+    border: 0
+    &:hover
+      background-color: $grayLight
+  li
+    display: list-item

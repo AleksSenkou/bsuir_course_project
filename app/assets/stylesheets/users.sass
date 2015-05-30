@@ -1,0 +1,80 @@
+@import "bootstrap-sprockets"
+@import "bootstrap"
+
+$white: #fff
+$grayDark: #222222
+$grayLight: #4F4F4F
+$blue: #23527c
+
+@mixin delay($speed)
+  transition-duration: $speed
+  -moz-transition-duration: $speed
+  -webkit-transition-duration: $speed
+  -o-transition-duration: $speed
+
+.form-panel
+  @extend .col-sm-6
+  margin: 0 0 0 25.5%
+
+.button-users-profile
+  @extend .btn
+  @extend .btn-primary
+  @extend .col-sm-3
+  margin: 0 0 0 38%
+
+.icons
+  margin: 0.5% 0 0 4%
+  img
+    width: 40px
+    height: 40px
+    border-radius: 50%
+    opacity: 0.7
+    @include delay(.4s)
+    &:hover
+      @include delay(.6s)
+      opacity: 1
+
+#btn-edit-user-img
+  @extend .btn
+  @extend .btn-default
+  width: 100
+  margin: 1% 0 0 0
+
+.edit-profile-bottom-part
+  margin: 15% 0 0 0
+
+#btn-delete-account
+  @extend .btn
+  @extend .btn-danger
+  margin: 0 0 0 1%
+
+#btn-cancel-edit
+  @extend .btn
+  @extend .btn-warning
+  margin: 4% 0 0 0
+  float: right
+
+#show-right-part
+  @extend .col-sm-4
+
+#show-user-name
+  margin: 2% 0 0 0
+  font: bold 2em 'Helvetica'
+  color: #333
+
+#show-user-email
+  font: normal 1.1em 'Helvetica'
+  color: $grayLight
+
+#show-left-part
+  @extend .col-sm-8
+
+#show-user-advert-name
+  margin: 1% 0 0 0
+  font: normal 1.3em 'Helvetica'
+  color: #000
+
+#show-user-add-advert-btn
+  @extend .btn
+  @extend .btn-default
+  width: 100%

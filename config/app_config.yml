@@ -1,0 +1,7 @@
+omniauth:
+ facebook:
+  key: 347174522156704
+  secret: 2448bedf67cac073332ce5403cfebe09
+ twitter:
+  key: 9zf9nBmQ0mwLsk8YnufCMjgI1
+  secret: 0os0GfItXHMWptTBEYQfQkmJTsXIkzepj8tlLd1nsftctmL1mD
