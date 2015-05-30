@@ -7,7 +7,6 @@ class SchedulesController < ApplicationController
 
   def find_or_create
     group_number = schedule_param[:group_number]
-
     @schedule = Schedule.where(group_number: group_number)
 
     if @schedule.empty?
@@ -18,7 +17,7 @@ class SchedulesController < ApplicationController
   end
 
   def show
-    @schedule.write_to_file
+    @schedule.parse_info
   end
 
   private
