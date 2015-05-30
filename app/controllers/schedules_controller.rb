@@ -5,9 +5,28 @@ class SchedulesController < ApplicationController
     @schedule = Schedule.new
   end
 
-  def create
-    @schedule = Schedule.create(schedule_params)
-    if @schedule.save
+  def find_or_create
+    group_number = schedule_param[:group_number]
+
+    @schedule = Schedule.where(group_number: group_number)
+
+    if @schedule.empty?
+      create_schedule
+    else
+      redirect_to schedule_url(@schedule.first.id)
+    end
+  end
+
+  def show
+    @schedule.write_to_file
+  end
+
+  private
+
+  def create_schedule
+    @schedule = Schedule.create(schedule_param)
+
+    if @schedule.group_present? && @schedule.save
       flash[:notice] = 'Your schedule'
       redirect_to @schedule
     else
@@ -16,18 +35,11 @@ class SchedulesController < ApplicationController
     end
   end
 
-  def show
-
-  end
-
-  private
-
   def load_schedule
     @schedule = Schedule.find(params[:id])
   end
 
-  def schedule_params
+  def schedule_param
     params.require(:schedule).permit(:group_number)
   end
 end
-

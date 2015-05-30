@@ -21,6 +21,9 @@ gem 'uglifier', '>= 1.3.0'
 # end
 
 # group :features do
+gem 'pry'
+gem 'mechanize'
+gem 'nokogiri'
 gem 'acts_as_votable'
 gem 'slim-rails'
 gem 'turbolinks'

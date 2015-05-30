@@ -1,5 +1,5 @@
 .group-number-input
-  = simple_form_for(@schedule, url: schedules_path, html: { method: :post }) do |f|
+  = simple_form_for(@schedule, url: find_or_create_schedule_path, html: { method: :post }) do |f|
     = f.input :group_number, autofocus: true, required: false
     = f.button :submit, "Search"
 
