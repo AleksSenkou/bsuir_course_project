@@ -1,7 +1,7 @@
 require "open-uri"
 
 class Schedule < ActiveRecord::Base
-  has_many :lessons
+  has_many :lessons, dependent: :destroy
 
   validates :group_number,
     numericality: { only_integer: true,
@@ -18,11 +18,7 @@ class Schedule < ActiveRecord::Base
   def parse_info
     file_path = "public/groups/#{group_number}.xml"
     write_to_file(file_path)
-
-    info = { last_name: '', first_name: '', middle_name: '',
-             subject: '' }
-
-    save_teaches_and_subjects(file_path, info)
+    parse_bsuir(file_path)
   end
 
   private
@@ -33,33 +29,79 @@ class Schedule < ActiveRecord::Base
     open("#{file_path}", 'wb') { |file| file << open(url).read }
   end
 
-  def save_teaches_and_subjects(file_path, info)
+  def parse_bsuir(file_path)
     file = File.open("#{file_path}")
     doc = Nokogiri::XML(file)
+    info = {}
+    @day = ''
+    @count = 0
 
-    path = "//scheduleModel"
-    doc.xpath(path).map do |schedule_model|
-      path = "//scheduleModel//schedule" # each lesson
-      schedule_model.xpath(path).map do |schedule|
+    doc.xpath("//scheduleModel").map do |schedule_model|
+      schedule_model.children.map { |i| @day = i.text if i.name == 'weekDay' }
+      schedule_model.children.map do |schedule|
+        break if schedule.name == 'weekDay'
 
-        if schedule.children[5].children.text == "ФизК (вкл. СПИДиН)"
-          save_info_for_sport_lesson(schedule)
+        info = {week_number: '', day: @day}
+        content = schedule.children
+
+        if content[5].text == "ФизК (вкл. СПИДиН)"
+          parse_info_for_sport_lesson(content, info)
           next
         end
 
-        info[:subject] = schedule.children[7].children.text
-
-        schedule.children[1].children.map do |i|
-          info[:first_name] = i.text if i.name == 'firstName'
-          info[:last_name] = i.text if i.name == 'lastName'
-          info[:middle_name] = i.text if i.name == 'middleName'
-        end
-        # binding.pry if info[:last_name] == 'Байрак'
+        parse_info_for_normal_lesson(content, info)
+        @count += 1
       end
     end
   end
 
-  def save_info_for_sport_lesson(schedule)
-    info[:subject] = "ФизК (вкл. СПИДиН)"
+  def parse_info_for_normal_lesson(content, info)
+    content[1].children.map do |i|
+      info[:first_name]  = i.text if i.name == 'firstName'
+      info[:last_name]   = i.text if i.name == 'lastName'
+      info[:middle_name] = i.text if i.name == 'middleName'
+    end
+
+    info[:class_room]    = content[0].text
+    info[:time]          = content[2].text
+    info[:lesson_type]   = content[3].text
+    info[:num_subgroup]  = content[5].text
+    info[:subject]       = content[7].text
+
+    content.map do |i|
+      info[:week_number] << i.text if i.name == 'weekNumber'
+    end
+
+    save_info(info)
+  end
+
+  def parse_info_for_sport_lesson(content, info)
+    content.map do |i|
+      info[:week_number] << i.text if i.name == 'weekNumber'
+    end
+
+    info[:last_name]    = ''
+    info[:middle_name]  = ''
+    info[:first_name]   = ''
+    info[:class_room]   = ''
+    info[:time]         = content[0].text
+    info[:lesson_type]  = content[1].text
+    info[:num_subgroup] = content[3].text
+    info[:subject]      = content[5].text
+
+    save_info(info)
+  end
+
+  def save_info(info)
+    teacher = info[:last_name] + ' ' + info[:first_name] + ' ' + info[:middle_name]
+
+    @lesson = self.lessons.create_with(subject: info[:subject]).find_or_create_by(teacher: teacher)
+
+    @lesson.options.create( day:          info[:day],
+                            week_number:  info[:week_number],
+                            time:         info[:time],
+                            lesson_type:  info[:lesson_type],
+                            class_room:   info[:class_room],
+                            num_subgroup: info[:num_subgroup] )
   end
 end
