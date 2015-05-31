@@ -18,6 +18,7 @@ class SchedulesController < ApplicationController
 
   def show
     @schedule.parse_info
+    @lessons = @schedule.lessons
   end
 
   private
@@ -26,7 +27,6 @@ class SchedulesController < ApplicationController
     @schedule = Schedule.create(schedule_param)
 
     if @schedule.group_present? && @schedule.save
-      flash[:notice] = 'Your schedule'
       redirect_to @schedule
     else
       flash.now[:error] = 'Wrong input format. Enter correct group number, please'

@@ -1,0 +1,32 @@
+- days = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота']
+
+.center
+  h4 group #{@schedule.group_number}
+
+
+table border="2"
+  caption Schedule
+  thead
+    tr
+      th Weeks
+      th Time
+      th Subject
+      th Subgr.
+      th Audience
+      th Teacher
+  tbody
+    - current_day = @lessons.first.day
+    tr
+      td colspan="7" #{current_day}
+    - @lessons.each do |les|
+      - if current_day != les.day
+        - current_day = les.day
+        tr
+          td colspan="7" #{current_day}
+      tr
+        td #{les.week_number}
+        td #{les.time}
+        td #{les.subject}
+        td #{les.num_subgroup}
+        td #{les.class_room}
+        td #{les.teacher}
