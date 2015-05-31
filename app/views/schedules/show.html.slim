@@ -24,7 +24,7 @@ table border="1" id='schedule-table'
       tr
         td #{les.week_number}
         td #{les.time}
-        td #{les.subject}
+        td #{les.subject} (#{les.lesson_type})
         td #{les.num_subgroup}
         td #{les.class_room}
-        td #{ link_to les.teacher, teacher_path(les) }
+        td #{ link_to les.teacher, show_teacher_and_subject_info_path(les) }

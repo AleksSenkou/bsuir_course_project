@@ -1,6 +1,6 @@
 class SchedulesController < ApplicationController
   before_filter :load_schedule, only: [:show]
-  before_filter :load_lesson, only: [:show_teacher, :show_subject]
+  before_filter :load_lesson, only: [:show_teacher_and_subject_info]
 
   def new
     @schedule = Schedule.new
@@ -22,15 +22,10 @@ class SchedulesController < ApplicationController
     @lessons = @schedule.lessons
   end
 
-  def show_teacher
+  def show_teacher_and_subject_info
     @comments = Comment.where(lesson_id: @lesson.id)
-
     @lesson.parse_info_about_teacher if @comments.empty?
-
     @teacher = @lesson.teacher
-  end
-
-  def show_subject
   end
 
   private

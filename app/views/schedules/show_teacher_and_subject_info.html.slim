@@ -1,0 +1,12 @@
+.center
+  h3 #{@teacher.upcase}
+
+#teacher-views
+  h4 Views
+  - if @lesson.comments.any?
+    - @lesson.comments.each do |view|
+      hr
+      p #{view.content}
+
+  - else
+    p No views for the lector
