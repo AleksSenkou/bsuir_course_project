@@ -1,19 +1,17 @@
-- days = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота']
-
 .center
   h4 group #{@schedule.group_number}
 
 
-table border="2"
-  caption Schedule
+table border="1" id='schedule-table'
+  caption.center Schedule
   thead
     tr
-      th Weeks
-      th Time
-      th Subject
-      th Subgr.
-      th Audience
-      th Teacher
+      th.center Weeks
+      th.center Time
+      th.center Subject
+      th.center Subgr.
+      th.center Audience
+      th.center Teacher
   tbody
     - current_day = @lessons.first.day
     tr
