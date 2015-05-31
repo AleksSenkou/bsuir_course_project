@@ -27,4 +27,4 @@ table border="1" id='schedule-table'
         td #{les.subject}
         td #{les.num_subgroup}
         td #{les.class_room}
-        td #{les.teacher}
+        td #{ link_to les.teacher, teacher_path(les) }
